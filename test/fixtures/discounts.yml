@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  applied_to: 1
+  unit: MyString
+  plan_id: 
+
+two:
+  applied_to: 1
+  unit: MyString
+  plan_id: 
