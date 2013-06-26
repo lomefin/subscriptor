@@ -2,8 +2,10 @@
 
 one:
   name: MyString
+  version: 1
   product_id: 
 
 two:
   name: MyString
+  version: 1
   product_id: 

@@ -27,3 +27,10 @@ gem 'active_model_serializers'
 
 gem 'money-rails'
 gem 'eu_central_bank'
+
+
+group :test do 
+
+  gem 'rspec-rails', "~> 2.12"
+  
+end

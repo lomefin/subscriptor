@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130614023703) do
+ActiveRecord::Schema.define(version: 20130626213821) do
+
+  create_table "customers", force: true do |t|
+    t.integer  "product_id"
+    t.integer  "provider_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "customers", ["product_id"], name: "index_customers_on_product_id"
 
   create_table "discounts", force: true do |t|
     t.integer  "applied_to"
@@ -19,8 +28,8 @@ ActiveRecord::Schema.define(version: 20130614023703) do
     t.integer  "plan_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "value_cents",    default: 0,     null: false
-    t.string   "value_currency", default: "USD", null: false
+    t.integer  "value_pesos",    default: 0,     null: false
+    t.string   "value_currency", default: "CLP", null: false
   end
 
   add_index "discounts", ["plan_id"], name: "index_discounts_on_plan_id"
@@ -31,14 +40,15 @@ ActiveRecord::Schema.define(version: 20130614023703) do
     t.integer  "plan_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "cost_cents",    default: 0,     null: false
-    t.string   "cost_currency", default: "USD", null: false
+    t.integer  "cost_pesos",    default: 0,     null: false
+    t.string   "cost_currency", default: "CLP", null: false
   end
 
   add_index "item_charges", ["plan_id"], name: "index_item_charges_on_plan_id"
 
   create_table "plans", force: true do |t|
     t.string   "name"
+    t.integer  "version",    default: 1, null: false
     t.integer  "product_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -52,14 +62,24 @@ ActiveRecord::Schema.define(version: 20130614023703) do
     t.datetime "updated_at"
   end
 
+  create_table "subscriptions", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "plan_id"
+    t.integer  "customer_id"
+    t.date     "valid_until"
+    t.datetime "unsubscribed_at"
+  end
+
   create_table "tiers", force: true do |t|
     t.integer  "charge_id"
     t.string   "name"
     t.integer  "max_units"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "price_per_unit_cents",    default: 0,     null: false
-    t.string   "price_per_unit_currency", default: "USD", null: false
+    t.integer  "price_per_unit_pesos",    default: 0,     null: false
+    t.string   "price_per_unit_currency", default: "CLP", null: false
   end
 
   add_index "tiers", ["charge_id"], name: "index_tiers_on_charge_id"
