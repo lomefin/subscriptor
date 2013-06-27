@@ -1,9 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  name: MyString
-  product_id: 
+familink_pro:
+  name: FamilinkPro
+  version: 1
+  product_id: familink
 
-two:
-  name: MyString
-  product_id: 
+tercera_LV:
+  name: Tercera Lunes a Viernes
+  version: 1
+  product_id: tercera
+
+preschool_monthlyfee:
+  name: Mensualidad niño
+  version: 1
+  product_id: preschool

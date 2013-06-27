@@ -1,0 +1,7 @@
+#!/bin/bash
+cat /dev/null > log/test.log
+rake test > log/test_result
+cat log/test.log
+cat log/test_result
+
+
