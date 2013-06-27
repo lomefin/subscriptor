@@ -1,7 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  name: MyString
+familink:
+  name: Familink
 
-two:
-  name: MyString
+snapchild:
+  name: SnapChild
+
+tercera:
+  name: LaTercera
+
+preschool:
+  name: La Manzanita
