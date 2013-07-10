@@ -1,8 +1,6 @@
 class Tier < ActiveRecord::Base
   belongs_to :charge
 
-  attr_accessor :price_per_unit_cents
-
   def price_per_unit
     Rails::logger.debug "Getting Price per unit (cents): " + price_per_unit_cents.to_s
     @price_per_unit_cents/100

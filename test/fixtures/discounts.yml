@@ -1,11 +1,21 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  applied_to: 1
-  unit: MyString
-  plan_id: 
+first_month:
+  unit: percentage
+  plan_id: familink_pro
+  position: 1
+  value_pesos: 50
 
-two:
-  applied_to: 1
-  unit: MyString
-  plan_id: 
+second_month:
+  unit: percentage
+  plan_id: familink_pro
+  position: 2
+  value_pesos: 30
+
+money_off_1000:
+  unit: CLP
+  value_pesos: 1000
+
+money_off_3000000:
+  unit: CLP
+  value_pesos: 3000000

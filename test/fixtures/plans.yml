@@ -3,14 +3,19 @@
 familink_pro:
   name: FamilinkPro
   version: 1
-  product_id: familink
+  product: familink
 
 tercera_LV:
   name: Tercera Lunes a Viernes
   version: 1
-  product_id: tercera
+  product: tercera
+
+tercera_FDS:
+  name: Tercera Fin de Semana
+  version: 1
+  product: tercera
 
 preschool_monthlyfee:
   name: Mensualidad niño
   version: 1
-  product_id: preschool
+  product: preschool

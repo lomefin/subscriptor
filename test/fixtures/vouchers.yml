@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+voucher1:
+  subscription_id: 
+  due_date: 2013-07-01
+  fulfilled: 2013-07-01
+  payment_id: MyString
+
+voucher2:
+  subscription_id: 
+  due_date: 2013-07-01
+  fulfilled: 2013-07-01
+  payment_id: MyString

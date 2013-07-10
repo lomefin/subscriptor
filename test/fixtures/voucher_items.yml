@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+
+<% 1.upto(10) do |num| %>
+voucher_item<%=num%>:
+  voucher: voucher1
+  amount_pesos: 200
+  description: "Pays 200"
+<% end %>

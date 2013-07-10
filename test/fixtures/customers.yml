@@ -1,7 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 mary:
-  provider_id: 1
+  provider_id: 1023
+  product: familink
 
 john:
-  provider_id: 1
+  provider_id: 1233
+  product: familink
