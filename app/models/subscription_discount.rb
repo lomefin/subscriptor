@@ -8,13 +8,15 @@ class SubscriptionDiscount < ActiveRecord::Base
 
   def apply_to(voucher)
     total_value = voucher.total
-    Rails.logger.info "Discount: " + discount.inspect
-    value = discount.value  #Its returning nil
-    applied_on = DateTime.now
-    Rails.logger.info [total_value,value].inspect
-    effective_discount = [total_value,value].min
-    Rails.logger.info "effective_discount: " +effective_discount.to_s 
+
+    calculated_discount = discount.value 
+    calculated_discount = total_value * discount.value/100 if discount.unit == :percentage
+
+    effective_discount = [total_value,calculated_discount].min
+    
     voucher.add_item VoucherItem.create(amount: -effective_discount, description: "Default Discount")
+    
+    applied_on = DateTime.now
     save
   end
 end
