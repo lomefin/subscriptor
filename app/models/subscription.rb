@@ -4,7 +4,10 @@ class Subscription < ActiveRecord::Base
 
   has_many :item_charges
   has_many :subscription_discounts
+  has_many :vouchers
   class UnableToGenerateChargeException < Exception
+  end
+  class UnableToApplyDiscountException < Exception
   end
   def unsubscribe
     self.unsubscribed_at = DateTime.now
@@ -16,17 +19,20 @@ class Subscription < ActiveRecord::Base
   end
 
   def get_usage
-    plan.product.get_usage(customer.provider_id)
+    plan.product.request_usage_for_client(customer.provider_id)
   end
 
   def generate_voucher
     voucher = Voucher.create()
+    charges = []
     begin
-      charges = plan.calculate_charges(get_usage)
+      charges << plan.calculate_charge(get_usage)
       raise UnableToGenerateChargeException.new("Nil charges") if charges.nil?
       calculate_next_due_date
       save
-    rescue
+    rescue => e
+      Rails.logger.warn e.inspect
+      e.backtrace.each {|x| Rails.logger.warn x}
       raise UnableToGenerateChargeException.new if charges.nil?
     end
     
@@ -34,28 +40,20 @@ class Subscription < ActiveRecord::Base
 
     begin 
       discount = subscription_discounts.remaining.first
-      discount.apply_to(voucher)
+      discount.apply_to(voucher) unless discount.nil?
     rescue
       raise UnableToApplyDiscountException.new
     end
     voucher
   end
 
-  def next_discount
-    begin
-      discount = 
-      discount.applied_on = DateTime.now
-      discount.save
-      return discount
-    rescue
-      return nil
-    end
-
-  end
   def calculate_next_due_date
+    next_payment = Date.today if next_payment.nil?
     more_time = 1.month
     more_time = 1.week if plan.periodicity == :weekly
-    
+    Rails.logger.info next_payment
+    Rails.logger.info more_time
+    Rails.logger.info next_payment + more_time
     next_payment + more_time
 
   end

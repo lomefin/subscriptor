@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130708153221) do
+ActiveRecord::Schema.define(version: 20130723221230) do
 
   create_table "customers", force: true do |t|
     t.integer  "product_id"
@@ -88,7 +88,6 @@ ActiveRecord::Schema.define(version: 20130708153221) do
   end
 
   create_table "tiers", force: true do |t|
-    t.integer  "charge_id"
     t.string   "name"
     t.integer  "max_units"
     t.datetime "created_at"
@@ -96,9 +95,8 @@ ActiveRecord::Schema.define(version: 20130708153221) do
     t.integer  "price_per_unit_cents",    default: 0,     null: false
     t.string   "price_per_unit_currency", default: "USD", null: false
     t.string   "type"
+    t.integer  "plan_id"
   end
-
-  add_index "tiers", ["charge_id"], name: "index_tiers_on_charge_id"
 
   create_table "voucher_items", force: true do |t|
     t.integer  "voucher_id"

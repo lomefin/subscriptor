@@ -7,13 +7,24 @@ class SubscriptionTest < ActiveSupport::TestCase
 
   test "Charge Customer from subscription" do
     john = customers(:john)
+    familink = products(:familink)
+    familink.connector = Connectors::FamilinkConnector
+    familink.save
+    plan = Plan.create(product: familink, name: "Default")
+    
 
-    previous_charge_count = john.charges.count
-    plan = Plan.create(product: products(:familink),name: "Basic")
     plan.subscribe(john)
-    plan.calculate_charges_to_customers
 
-    assert_not_equal john.charges.count , previous_charge_count
+    subscription = plan.subscribe(john)
+    voucher_count = subscription.vouchers.count
+
+    subscription.generate_voucher
+
+    new_voucher_count = subscription.vouchers.count
+
+    assert_not_equal voucher_count, new_voucher_count
+    assert_equal new_voucher_count, voucher_count + 1
+    
 
   end
   

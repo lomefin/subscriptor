@@ -6,6 +6,7 @@ class Plan < ActiveRecord::Base
   has_many :subscriptions
   has_many :customers, through: :subscriptions
   has_many :discounts
+  has_many :tiers
   before_save :check_version
 
   def subscribe(customer,options = {})
@@ -34,7 +35,6 @@ class Plan < ActiveRecord::Base
       tier_charges << tier_cost
       total_cost = total_cost + tier_cost
     end
-    self.cost = total_cost
 
     VoucherItem.create(description: "Default Usage", amount: total_cost)
 
