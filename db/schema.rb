@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130723221230) do
+ActiveRecord::Schema.define(version: 20130724200808) do
 
   create_table "customers", force: true do |t|
     t.integer  "product_id"
@@ -49,11 +49,12 @@ ActiveRecord::Schema.define(version: 20130723221230) do
 
   create_table "plans", force: true do |t|
     t.string   "name"
-    t.integer  "version",     default: 1,         null: false
+    t.integer  "version",      default: 1,         null: false
     t.integer  "product_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "periodicity", default: "monthly"
+    t.string   "periodicity",  default: "monthly"
+    t.integer  "grace_period", default: 5
   end
 
   add_index "plans", ["product_id"], name: "index_plans_on_product_id"

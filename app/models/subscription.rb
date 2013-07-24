@@ -5,17 +5,18 @@ class Subscription < ActiveRecord::Base
   has_many :item_charges
   has_many :subscription_discounts
   has_many :vouchers
+
+  after_create :calculate_next_due_date
+
   class UnableToGenerateChargeException < Exception
   end
   class UnableToApplyDiscountException < Exception
   end
+
+
   def unsubscribe
     self.unsubscribed_at = DateTime.now
     self.save
-  end
-
-  def is_due?(due_date=DateTime.now)
-    next_payment < due_date
   end
 
   def get_usage
@@ -44,29 +45,40 @@ class Subscription < ActiveRecord::Base
     rescue
       raise UnableToApplyDiscountException.new
     end
+    voucher.due_date = Date.today + plan.grace_period.days
+    vouchers << voucher
     voucher
   end
 
   def calculate_next_due_date
-    next_payment = Date.today if next_payment.nil?
+    base_date = self.next_payment
+    base_date = Date.today if self.next_payment.nil?
+
     more_time = 1.month
     more_time = 1.week if plan.periodicity == :weekly
-    Rails.logger.info next_payment
-    Rails.logger.info more_time
-    Rails.logger.info next_payment + more_time
-    next_payment + more_time
 
+    self.next_payment = base_date + more_time
+    save
+  end
+
+  def is_due?(due_date=DateTime.now)
+    next_payment < due_date
+  end
+
+  def is_valid?
+    (vouchers.count == 0 or vouchers.last.due_date >= Date.today or vouchers.last.fulfilled?)
   end
 
   def is_active?
     ((valid_until.nil? or valid_until > DateTime.now) and unsubscribed_at.nil?)
   end
 
-  def self.due(due_date=DateTime.now)
-    where(['next_payment < ?',due_date])
-  end
-
   def self.active
     where(['(valid_until is NULL OR valid_until > ?) AND unsubscribed_at IS NULL',DateTime.now])
   end
+
+  def self.due(due_date=Date.today)
+    active.where(['next_payment < ?',due_date])
+  end
+
 end

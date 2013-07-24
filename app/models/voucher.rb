@@ -9,6 +9,6 @@ class Voucher < ActiveRecord::Base
     raise if voucher_item.amount.nil?
     voucher_items << voucher_item
     save
-    
   end
+  
 end
